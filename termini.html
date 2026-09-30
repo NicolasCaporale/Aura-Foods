@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<script>
+  (function() {
+    const isPWA = window.matchMedia('(display-mode: standalone)').matches
+               || window.navigator.standalone === true;
+    if (isPWA) document.documentElement.classList.add('pwa');
+  })();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>Termini e Condizioni di Servizio | Aura Foods</title>
+<meta name="description" content="Termini e Condizioni generali di utilizzo del servizio Aura Foods. Condizioni d'uso, responsabilità, disclaimer di sicurezza alimentare e regolamento Aura Coins.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://aura-foods.it/termini">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1a5c3a">
+<link rel="apple-touch-icon" href="/img/icon-180.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/img/icon-192.png">
+<link rel="shortcut icon" href="/img/icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Aura Foods">
+<meta property="og:title" content="Termini e Condizioni di Servizio | Aura Foods">
+<meta property="og:description" content="Condizioni di utilizzo, limitazioni di responsabilità e disclaimer alimentari di Aura Foods.">
+<meta property="og:image" content="https://aura-foods.it/img/image.png">
+<meta property="og:url" content="https://aura-foods.it/termini">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<style>
+:root {
+  --green-dark:  #004326;
+  --green-mid:   #1a5c3a;
+  --green-muted: #2d8653;
+  --green-light: #b7e4c7;
+  --green-pale:  #d8f3dc;
+  --text-dark:   #0d3320;
+  --text-mid:    #2d6a4f;
+  --red:         #ba1a1a;
+  --amber:       #b5600a;
+  --card-bg:     rgba(255, 255, 255, 0.94);
+  --border-subtle: rgba(192, 201, 191, 0.35);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  background: #a8d9a0;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Nunito', system-ui, sans-serif;
+  color: var(--text-dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 10%, rgba(200,240,195,0.7) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 45% at 85% 75%, rgba(160,225,170,0.5) 0%, transparent 55%),
+    linear-gradient(175deg, #b8e8b0 0%, #9dd498 40%, #8ecb88 100%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.browser-topbar {
+  display: none;
+}
+@media (min-width: 640px) {
+  html:not(.pwa) .browser-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 64px;
+    background: rgba(236,255,228,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(192,201,191,0.25);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    width: 100%;
+    max-width: 860px;
+  }
+}
+
+.topbar-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.topbar-logo img { width: 36px; height: 36px; border-radius: 10px; object-fit: cover; }
+.topbar-logo-name { font-family: 'Fredoka One', cursive; font-size: 20px; color: var(--green-dark); }
+.topbar-links { display: flex; gap: 24px; align-items: center; }
+.topbar-link {
+  font-weight: 700; font-size: 14px; color: #404942;
+  text-decoration: none; transition: color .2s;
+}
+.topbar-link:hover, .topbar-link.active { color: var(--green-dark); }
+.topbar-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--green-dark); color: white;
+  font-family: 'Fredoka One', cursive; font-size: 14px;
+  padding: 8px 18px; border-radius: 9999px;
+  text-decoration: none;
+}
+
+.page-shell {
+  width: 100%;
+  max-width: 860px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+@media (min-width: 640px) {
+  .page-shell { padding: 24px; }
+}
+
+.page-header {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(0, 67, 38, 0.06);
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 67, 38, 0.15);
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green-dark);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.back-btn:hover { background: #fff; transform: translateX(-2px); }
+
+.header-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 28px;
+  color: var(--green-dark);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-subtitle {
+  font-size: 14px;
+  color: var(--text-mid);
+  font-weight: 600;
+}
+
+.last-updated {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 12px;
+  background: rgba(45, 106, 79, 0.1);
+  color: var(--green-mid);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+/* CONTENT CARD */
+.legal-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px;
+  padding: 28px 24px;
+  box-shadow: 0 8px 32px rgba(0, 67, 38, 0.08);
+  margin-bottom: 24px;
+  line-height: 1.7;
+}
+
+@media (min-width: 640px) {
+  .legal-card { padding: 40px 36px; }
+}
+
+.legal-section {
+  margin-bottom: 32px;
+}
+.legal-section:last-child { margin-bottom: 0; }
+
+.legal-section h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 20px;
+  color: var(--green-dark);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legal-section p {
+  font-size: 15px;
+  color: #243328;
+  margin-bottom: 12px;
+}
+
+.legal-section ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 12px 0 16px 0;
+}
+
+.legal-section li {
+  position: relative;
+  padding-left: 24px;
+  font-size: 14.5px;
+  color: #243328;
+  margin-bottom: 8px;
+}
+
+.legal-section li::before {
+  content: '🌿';
+  position: absolute;
+  left: 0;
+  top: 1px;
+  font-size: 13px;
+}
+
+.disclaimer-box {
+  background: rgba(186, 26, 26, 0.07);
+  border-left: 4px solid var(--red);
+  padding: 16px 20px;
+  border-radius: 0 14px 14px 0;
+  margin: 18px 0;
+  font-size: 14.5px;
+  color: #4a0d0d;
+}
+
+.disclaimer-box strong {
+  color: #8c1010;
+  display: block;
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+
+.highlight-box {
+  background: rgba(216, 243, 220, 0.7);
+  border-left: 4px solid var(--green-mid);
+  padding: 14px 18px;
+  border-radius: 0 14px 14px 0;
+  margin: 16px 0;
+  font-size: 14px;
+  color: var(--green-dark);
+}
+
+.footer {
+  margin-top: auto;
+  padding: 24px 16px 12px;
+  text-align: center;
+  font-size: 12px;
+  color: rgba(13, 51, 32, 0.6);
+  font-weight: 700;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.footer-link {
+  color: var(--green-mid);
+  text-decoration: none;
+}
+.footer-link:hover { text-decoration: underline; }
+</style>
+</head>
+
+<body>
+
+<!-- ══ NAVBAR DESKTOP ══ -->
+<nav class="browser-topbar">
+  <a href="/" class="topbar-logo">
+    <img src="/img/image.png" alt="Aura Foods">
+    <span class="topbar-logo-name">Aura Foods</span>
+  </a>
+  <div class="topbar-links">
+    <a href="/#come-funziona" class="topbar-link">Come funziona</a>
+    <a href="/#features" class="topbar-link">Funzioni</a>
+    <a href="/verifica-alimenti" class="topbar-link">Verifica alimenti</a>
+    <a href="/termini" class="topbar-link active">Termini</a>
+    <a href="/privacy" class="topbar-link">Privacy</a>
+  </div>
+  <a href="/installa.html" class="topbar-cta">Installa gratis ↓</a>
+</nav>
+
+<div class="page-shell">
+
+  <!-- HEADER -->
+  <header class="page-header">
+    <div class="header-nav">
+      <a href="/" class="back-btn">‹ Torna alla Home</a>
+      <div style="font-size:13px;font-weight:800;color:var(--green-mid);">Condizioni d'Uso</div>
+    </div>
+    <h1 class="header-title">📜 Termini e Condizioni di Servizio</h1>
+    <div class="header-subtitle">Condizioni di utilizzo della piattaforma e della Progressive Web App Aura Foods</div>
+    <span class="last-updated">Ultimo aggiornamento: 30 Settembre 2026</span>
+  </header>
+
+  <!-- MAIN DOCUMENT -->
+  <main class="legal-card">
+
+    <div class="legal-section">
+      <h2>1. Oggetto e Accettazione dei Termini</h2>
+      <p>
+        I presenti Termini e Condizioni di Servizio ("<strong>Termini</strong>") regolano l'accesso e l'utilizzo del sito web <a href="https://aura-foods.it" style="color:var(--green-mid);font-weight:700;">aura-foods.it</a> e della relativa applicazione web e Progressive Web App (PWA) denominata <strong>Aura Foods</strong> ("<strong>Servizio</strong>" o "<strong>Piattaforma</strong>"), sviluppata e gestita da Nicolas Caporale e dal team di Aura Foods ("<strong>Titolare</strong>" o "<strong>Noi</strong>").
+      </p>
+      <p>
+        Registrando un account, effettuando l'accesso o continuando a navigare e utilizzare l'applicazione, l'utente ("<strong>Utente</strong>") dichiara di aver letto, compreso e accettato integralmente i presenti Termini, unitamente alla nostra <a href="/privacy" style="color:var(--green-mid);font-weight:700;">Informativa sulla Privacy</a>. Qualora non si intenda accettare integralmente tali condizioni, si è invitati a non utilizzare il Servizio.
+      </p>
+    </div>
+
+    <div class="legal-section">
+      <h2>2. Descrizione del Servizio</h2>
+      <p>
+        Aura Foods è uno strumento software concepito per supportare gli utenti nell'organizzazione domestica della dispensa e del frigorifero al fine di ridurre lo spreco alimentare. Il Servizio offre in particolare:
+      </p>
+      <ul>
+        <li>Tracciamento e inventario digitale degli alimenti conservati;</li>
+        <li>Riconoscimento di codici a barre alimentari (EAN) tramite integrazione con banche dati pubbliche (Open Food Facts);</li>
+        <li>Invio di promemoria e notifiche push in prossimità della scadenza;</li>
+        <li>Strumenti informativi orientativi sulla sicurezza e conservazione degli alimenti (sezione "Verifica Alimenti" e stime AI Safety);</li>
+        <li>Meccanismo di incentivazione simbolica (Aura Coins).</li>
+      </ul>
+    </div>
+
+    <!-- DISCLAIMER FONDAMENTALE -->
+    <div class="legal-section">
+      <h2>3. Disclaimer Fondamentale: Sicurezza Alimentare e Sanitaria</h2>
+
+      <div class="disclaimer-box">
+        <strong>⚠️ ATTENZIONE: ESCLUSIONE DI CONSULENZA MEDICO-SANITARIA E RESPONSABILITÀ</strong>
+        Tutte le informazioni, i suggerimenti, le schede informative (inclusa la guida "Verifica Alimenti"), le date stimate e gli output generati dalle funzioni di intelligenza artificiale ("AI Safety Check") hanno carattere <strong>ESCLUSIVAMENTE DIVULGATIVO, ORIENTATIVO E DI MASSIMA</strong>.
+        <br><br>
+        <strong>NON costituiscono in alcun caso e per nessun motivo:</strong>
+        <br>• Parere medico, igienico-sanitario, microbiologico, nutrizionale o veterinario professionale;
+        <br>• Garanzia di commestibilità, salubrità o assenza di tossine, batteri patogeni, muffe o allergeni negli alimenti consumati.
+      </div>
+
+      <p>L'Utente prende espressamente atto e accetta che:</p>
+      <ul>
+        <li><strong>Differenza giuridica delle diciture di data:</strong>
+          <br>– <em>"Da consumarsi entro" (Data di Scadenza perentoria):</em> si applica ad alimenti rapidamente deperibili (es. carni fresche, pesce fresco, latte fresco non pastorizzato). Il consumo oltre tale data comporta rischi biologici per la salute e non deve avvenire.
+          <br>– <em>"Da consumarsi preferibilmente entro" (Termine Minimo di Conservazione - TMC):</em> indica il termine temporale entro cui l'alimento garantisce le sue caratteristiche qualitative ottimali se correttamente conservato.
+        </li>
+        <li><strong>Fattori di variabilità:</strong> La reale conservabilità di un alimento dipende da condizioni che l'applicazione non può verificare (integrità del sigillo, catena del freddo, temperatura effettiva del frigorifero, condizioni igieniche di manipolazione, contaminazioni crociate).</li>
+        <li><strong>Responsabilità esclusiva dell'Utente:</strong> L'Utente è l'unico ed esclusivo responsabile della verifica organolettica diretta dell'alimento (esame visivo, consistenza, odore, assenza di muffe) prima di qualsiasi assaggio o consumo. In presenza di qualunque dubbio, l'alimento deve essere scartato.</li>
+        <li><strong>Manleva da responsabilità sanitaria:</strong> Il Titolare e Aura Foods non saranno in alcun caso ritenuti responsabili per danni alla salute, intossicazioni alimentari, reazioni allergiche, decessi, lesioni o qualsiasi altro pregiudizio diretto o indiretto derivante dal consumo di cibi gestiti, memorizzati o valutati tramite l'applicazione.</li>
+      </ul>
+    </div>
+
+    <div class="legal-section">
+      <h2>4. Registrazione dell'Account e Sicurezza</h2>
+      <p>
+        L'accesso a determinate funzionalità richiede la creazione di un account personale. L'Utente si impegna a:
+      </p>
+      <ul>
+        <li>Avere compiuto almeno 16 anni di età (ovvero avere il consenso di chi esercita la responsabilità genitoriale);</li>
+        <li>Fornire un indirizzo email veritiero, valido e di propria pertinenza;</li>
+        <li>Custodire con diligenza la propria password e non cederla a terzi;</li>
+        <li>Segnalare immediatamente qualsiasi uso non autorizzato del proprio account o violazione della sicurezza.</li>
+      </ul>
+      <p>Il Titolare si riserva il diritto di sospendere o cancellare gli account che violino i presenti Termini o che presentino attività fraudolente.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>5. Regolamento "Aura Coins" e Gamification</h2>
+      <p>L'applicazione include un sistema di ricompensa simbolica denominato "Aura Coins", finalizzato a premiare le buone pratiche contro lo spreco alimentare. L'Utente riconosce e accetta che:</p>
+      <ul>
+        <li>Gli Aura Coins sono <strong>punti virtuali ludici privi di qualsiasi valore monetario o finanziario</strong>;</li>
+        <li>Non costituiscono moneta elettronica, criptovaluta, credito spendibile, né titolo di credito convertibile in valuta legale;</li>
+        <li>Non sono trasferibili tra utenti, né vendibili, permutabili o riscattabili in denaro o premi pecuniari;</li>
+        <li>Il Titolare si riserva la facoltà di modificare, ricalibrare, azzerare o sospendere il sistema dei punti in qualsiasi momento senza che ciò dia diritto ad alcun indennizzo.</li>
+      </ul>
+    </div>
+
+    <div class="legal-section">
+      <h2>6. Proprietà Intellettuale e Diritti d'Autore</h2>
+      <p>
+        Tutti i contenuti della Piattaforma — inclusi a titolo esemplificativo: marchio "Aura Foods", loghi, grafiche, codice sorgente, architettura del software, testi, icone e guide — sono di proprietà esclusiva di Nicolas Caporale o dei rispettivi aventi diritto e sono tutelati dalle leggi italiane ed internazionali sul diritto d'autore e sulla proprietà industriale.
+      </p>
+      <p>
+        È fatto espresso divieto all'Utente di copiare, modificare, distribuire, decompilare, effettuare reverse engineering o sfruttare commercialmente il codice o i contenuti del Servizio senza preventiva autorizzazione scritta.
+      </p>
+    </div>
+
+    <div class="legal-section">
+      <h2>7. Disponibilità del Servizio e Limitazione Generale di Responsabilità</h2>
+      <p>
+        Il Servizio è fornito "<strong>COSI COM'È</strong>" ("<em>AS IS</em>") e "<strong>IN BASE ALLA DISPONIBILITÀ</strong>" ("<em>AS AVAILABLE</em>").
+      </p>
+      <p>
+        Nei limiti massimi consentiti dalla legge applicabile:
+      </p>
+      <ul>
+        <li>Il Titolare non garantisce che l'applicazione funzioni in modo ininterrotto, privo di bug, esente da errori o che i dati memorizzati non vadano soggetti a perdite accidentali (è sempre consigliata una condotta prudente);</li>
+        <li>Il Titolare declina ogni responsabilità per interruzioni dovute a manutenzione, guasti dei server cloud (Supabase, Vercel), malfunzionamenti della rete Internet o cause di forza maggiore;</li>
+        <li>I dati dei prodotti ricavati tramite Open Food Facts provengono da un database pubblico collaborativo e possono contenere inesattezze, variazioni di ingredienti o errori di catalogazione per i quali Aura Foods non risponde.</li>
+      </ul>
+    </div>
+
+    <div class="legal-section">
+      <h2>8. Modifiche ai Termini di Servizio</h2>
+      <p>
+        Il Titolare si riserva il diritto di aggiornare o modificare i presenti Termini in qualsiasi momento, ad esempio a seguito di mutamenti normativi, tecnici o nell'offerta dei servizi. Le modifiche saranno rese pubbliche su questa pagina con l'aggiornamento della data di revisione. L'utilizzo continuato del Servizio dopo la pubblicazione delle modifiche costituisce integrale accettazione delle stesse.
+      </p>
+    </div>
+
+    <div class="legal-section">
+      <h2>9. Legge Applicabile e Foro Competente</h2>
+      <p>
+        I presenti Termini sono regolati e interpretati in conformità alla <strong>legge italiana</strong>.
+      </p>
+      <p>
+        Per qualsiasi controversia derivante dall'interpretazione, esecuzione o validità dei presenti Termini:
+      </p>
+      <ul>
+        <li>Se l'Utente agisce in qualità di Consumatore (ai sensi del D.Lgs. 206/2005 - Codice del Consumo), la competenza territoriale inderogabile spetta al giudice del luogo di residenza o di domicilio del consumatore all'interno del territorio dello Stato italiano.</li>
+        <li>In tutti gli altri casi, la competenza esclusiva spetterà al Foro competente di Bari (Italia).</li>
+      </ul>
+    </div>
+
+    <div class="legal-section">
+      <h2>10. Contatti e Comunicazioni</h2>
+      <p>
+        Per chiarimenti, segnalazioni o informazioni relative ai presenti Termini di Servizio, è possibile contattare l'amministrazione di Aura Foods all'indirizzo email:
+        <br>
+        <a href="mailto:nicolas.caporale@marconibari.edu.it" style="color:var(--green-dark);font-weight:700;">nicolas.caporale@marconibari.edu.it</a> / <a href="mailto:info@aura-foods.it" style="color:var(--green-dark);font-weight:700;">info@aura-foods.it</a>
+      </p>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="/" class="footer-link">Home</a>
+      <a href="/installa.html" class="footer-link">Installa PWA</a>
+      <a href="/verifica-alimenti" class="footer-link">Verifica Alimenti</a>
+      <a href="/termini" class="footer-link" style="font-weight:900;">Termini di Servizio</a>
+      <a href="/privacy" class="footer-link">Privacy Policy</a>
+    </div>
+    <p>© 2025-2026 Aura Foods • Tutti i diritti riservati</p>
+  </footer>
+
+</div>
+
+</body>
+</html>
