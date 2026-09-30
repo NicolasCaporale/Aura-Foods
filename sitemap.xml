@@ -4,22 +4,36 @@
   <url>
     <loc>https://aura-foods.it/</loc>
     <priority>1.0</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2026-06-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <lastmod>2026-09-30</lastmod>
   </url>
 
   <url>
     <loc>https://aura-foods.it/installa.html</loc>
     <priority>0.8</priority>
-    <changefreq>yearly</changefreq>
-    <lastmod>2026-06-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-09-30</lastmod>
   </url>
 
   <url>
     <loc>https://aura-foods.it/verifica-alimenti</loc>
     <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-09-30</lastmod>
+  </url>
+
+  <url>
+    <loc>https://aura-foods.it/privacy</loc>
+    <priority>0.5</priority>
     <changefreq>yearly</changefreq>
-    <lastmod>2026-06-10</lastmod>
+    <lastmod>2026-09-30</lastmod>
+  </url>
+
+  <url>
+    <loc>https://aura-foods.it/termini</loc>
+    <priority>0.5</priority>
+    <changefreq>yearly</changefreq>
+    <lastmod>2026-09-30</lastmod>
   </url>
 
 </urlset>
