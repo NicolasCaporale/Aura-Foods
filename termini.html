@@ -26,6 +26,8 @@
 <meta property="og:description" content="Condizioni di utilizzo, limitazioni di responsabilità e disclaimer alimentari di Aura Foods.">
 <meta property="og:image" content="https://aura-foods.it/img/image.png">
 <meta property="og:url" content="https://aura-foods.it/termini">
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -42,7 +44,6 @@
   --text-mid:    #2d6a4f;
   --red:         #ba1a1a;
   --amber:       #b5600a;
-  --card-bg:     rgba(255, 255, 255, 0.94);
   --border-subtle: rgba(192, 201, 191, 0.35);
 }
 
@@ -54,7 +55,7 @@
 }
 
 html {
-  background: #a8d9a0;
+  background: #ecffe4;
   scroll-behavior: smooth;
 }
 
@@ -64,187 +65,102 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
+.blob-bg {
   background:
-    radial-gradient(ellipse 70% 50% at 15% 10%, rgba(200,240,195,0.7) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 45% at 85% 75%, rgba(160,225,170,0.5) 0%, transparent 55%),
-    linear-gradient(175deg, #b8e8b0 0%, #9dd498 40%, #8ecb88 100%);
-  pointer-events: none;
-  z-index: -1;
+    radial-gradient(ellipse at 20% 10%, rgba(197,238,188,0.4) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(168,217,160,0.3) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 80%, rgba(45,106,79,0.15) 0%, transparent 50%),
+    #ecffe4;
 }
 
-.browser-topbar {
-  display: none;
-}
-@media (min-width: 640px) {
-  html:not(.pwa) .browser-topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 24px;
-    height: 64px;
-    background: rgba(236,255,228,0.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(192,201,191,0.25);
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    width: 100%;
-    max-width: 860px;
-  }
-}
+.fredoka { font-family: 'Fredoka One', cursive; }
 
-.topbar-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-.topbar-logo img { width: 36px; height: 36px; border-radius: 10px; object-fit: cover; }
-.topbar-logo-name { font-family: 'Fredoka One', cursive; font-size: 20px; color: var(--green-dark); }
-.topbar-links { display: flex; gap: 24px; align-items: center; }
-.topbar-link {
-  font-weight: 700; font-size: 14px; color: #404942;
-  text-decoration: none; transition: color .2s;
-}
-.topbar-link:hover, .topbar-link.active { color: var(--green-dark); }
-.topbar-cta {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: var(--green-dark); color: white;
-  font-family: 'Fredoka One', cursive; font-size: 14px;
-  padding: 8px 18px; border-radius: 9999px;
+.nav-link {
+  position: relative;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text-mid);
+  transition: color 0.2s;
   text-decoration: none;
 }
-
-.page-shell {
-  width: 100%;
-  max-width: 860px;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 0; height: 2px;
+  background: var(--green-mid);
+  border-radius: 2px;
+  transition: width 0.3s ease;
 }
+.nav-link:hover { color: var(--green-dark); }
+.nav-link:hover::after { width: 100%; }
+.nav-link.active { color: var(--green-dark); }
+.nav-link.active::after { width: 100%; }
 
-@media (min-width: 640px) {
-  .page-shell { padding: 24px; }
-}
-
-.page-header {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border-subtle);
-  border-radius: 24px;
-  padding: 20px 24px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 20px rgba(0, 67, 38, 0.06);
-}
-
-.header-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
-}
-
-.back-btn {
+.btn-primary {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(0, 67, 38, 0.15);
-  padding: 6px 14px;
-  border-radius: 9999px;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--green-dark);
-  text-decoration: none;
-  cursor: pointer;
-  transition: all .2s ease;
-}
-.back-btn:hover { background: #fff; transform: translateX(-2px); }
-
-.header-title {
+  gap: 8px;
+  background: var(--green-dark);
+  color: white;
   font-family: 'Fredoka One', cursive;
-  font-size: 28px;
+  font-size: 15px;
+  padding: 10px 24px;
+  border-radius: 9999px;
+  text-decoration: none;
+  box-shadow: 0 4px 18px rgba(0,67,38,0.25);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,67,38,0.32); }
+
+/* LEGAL CARD */
+.legal-card {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 28px;
+  padding: 32px 24px;
+  box-shadow: 0 10px 36px rgba(0, 67, 38, 0.07);
+  line-height: 1.75;
+}
+@media (min-width: 768px) {
+  .legal-card { padding: 48px 52px; }
+}
+
+.legal-section { margin-bottom: 36px; }
+.legal-section:last-child { margin-bottom: 0; }
+
+.legal-section h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 22px;
   color: var(--green-dark);
-  margin-bottom: 6px;
+  margin-bottom: 14px;
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.header-subtitle {
-  font-size: 14px;
-  color: var(--text-mid);
-  font-weight: 600;
-}
-
-.last-updated {
-  display: inline-block;
-  margin-top: 8px;
-  font-size: 12px;
-  background: rgba(45, 106, 79, 0.1);
-  color: var(--green-mid);
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-weight: 700;
-}
-
-/* CONTENT CARD */
-.legal-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid var(--border-subtle);
-  border-radius: 24px;
-  padding: 28px 24px;
-  box-shadow: 0 8px 32px rgba(0, 67, 38, 0.08);
-  margin-bottom: 24px;
-  line-height: 1.7;
-}
-
-@media (min-width: 640px) {
-  .legal-card { padding: 40px 36px; }
-}
-
-.legal-section {
-  margin-bottom: 32px;
-}
-.legal-section:last-child { margin-bottom: 0; }
-
-.legal-section h2 {
-  font-family: 'Fredoka One', cursive;
-  font-size: 20px;
-  color: var(--green-dark);
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .legal-section p {
-  font-size: 15px;
+  font-size: 15.5px;
   color: #243328;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .legal-section ul {
   list-style: none;
   padding-left: 0;
-  margin: 12px 0 16px 0;
+  margin: 14px 0 18px 0;
 }
 
 .legal-section li {
   position: relative;
-  padding-left: 24px;
-  font-size: 14.5px;
+  padding-left: 28px;
+  font-size: 15px;
   color: #243328;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .legal-section li::before {
@@ -252,94 +168,84 @@ body::before {
   position: absolute;
   left: 0;
   top: 1px;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .disclaimer-box {
   background: rgba(186, 26, 26, 0.07);
   border-left: 4px solid var(--red);
-  padding: 16px 20px;
-  border-radius: 0 14px 14px 0;
-  margin: 18px 0;
-  font-size: 14.5px;
+  padding: 18px 22px;
+  border-radius: 0 16px 16px 0;
+  margin: 20px 0;
+  font-size: 15px;
   color: #4a0d0d;
 }
 
 .disclaimer-box strong {
   color: #8c1010;
   display: block;
-  margin-bottom: 6px;
-  font-size: 15px;
+  margin-bottom: 8px;
+  font-size: 16px;
 }
 
 .highlight-box {
-  background: rgba(216, 243, 220, 0.7);
+  background: rgba(208, 249, 198, 0.45);
   border-left: 4px solid var(--green-mid);
-  padding: 14px 18px;
-  border-radius: 0 14px 14px 0;
-  margin: 16px 0;
-  font-size: 14px;
+  padding: 16px 20px;
+  border-radius: 0 16px 16px 0;
+  margin: 18px 0;
+  font-size: 14.5px;
   color: var(--green-dark);
 }
-
-.footer {
-  margin-top: auto;
-  padding: 24px 16px 12px;
-  text-align: center;
-  font-size: 12px;
-  color: rgba(13, 51, 32, 0.6);
-  font-weight: 700;
-}
-
-.footer-links {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-bottom: 8px;
-  flex-wrap: wrap;
-}
-
-.footer-link {
-  color: var(--green-mid);
-  text-decoration: none;
-}
-.footer-link:hover { text-decoration: underline; }
 </style>
 </head>
 
-<body>
+<body class="blob-bg">
 
-<!-- ══ NAVBAR DESKTOP ══ -->
-<nav class="browser-topbar">
-  <a href="/" class="topbar-logo">
-    <img src="/img/image.png" alt="Aura Foods">
-    <span class="topbar-logo-name">Aura Foods</span>
-  </a>
-  <div class="topbar-links">
-    <a href="/#come-funziona" class="topbar-link">Come funziona</a>
-    <a href="/#features" class="topbar-link">Funzioni</a>
-    <a href="/verifica-alimenti" class="topbar-link">Verifica alimenti</a>
-    <a href="/termini" class="topbar-link active">Termini</a>
-    <a href="/privacy" class="topbar-link">Privacy</a>
-  </div>
-  <a href="/installa.html" class="topbar-cta">Installa gratis ↓</a>
-</nav>
-
-<div class="page-shell">
-
-  <!-- HEADER -->
-  <header class="page-header">
-    <div class="header-nav">
-      <a href="/" class="back-btn">‹ Torna alla Home</a>
-      <div style="font-size:13px;font-weight:800;color:var(--green-mid);">Condizioni d'Uso</div>
+<!-- ═══════════════ NAVBAR ═══════════════ -->
+<header class="bg-surface/90 backdrop-blur-md sticky top-0 z-50 border-b border-outline-variant/20" style="background:rgba(236,255,228,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(192,201,191,0.25);">
+  <nav class="max-w-6xl mx-auto px-5 h-20 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-3 no-underline">
+      <img src="/img/image.png" alt="Aura Foods" class="w-10 h-10 rounded-xl object-cover shadow-sm"/>
+      <span class="fredoka text-2xl" style="color:var(--green-dark);">Aura Foods</span>
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="/#come-funziona" class="nav-link">Come funziona</a>
+      <a href="/#features" class="nav-link">Funzioni</a>
+      <a href="/#coins" class="nav-link">Aura Coins</a>
+      <a href="/verifica-alimenti" class="nav-link">Verifica alimenti</a>
     </div>
-    <h1 class="header-title">📜 Termini e Condizioni di Servizio</h1>
-    <div class="header-subtitle">Condizioni di utilizzo della piattaforma e della Progressive Web App Aura Foods</div>
-    <span class="last-updated">Ultimo aggiornamento: 30 Settembre 2026</span>
-  </header>
+    <a href="/installa.html" class="btn-primary">
+      Inizia gratis
+      <span class="material-symbols-outlined" style="font-size:18px;">download</span>
+    </a>
+  </nav>
+</header>
 
-  <!-- MAIN DOCUMENT -->
-  <main class="legal-card">
+<!-- ═══════════════ HERO BANNER ═══════════════ -->
+<section class="max-w-6xl mx-auto px-5 pt-8 pb-4 md:pt-12 md:pb-6">
+  <div class="flex items-center gap-2 mb-4">
+    <a href="/" class="text-sm font-bold flex items-center gap-1 hover:underline" style="color:var(--green-mid);">
+      <span class="material-symbols-outlined" style="font-size:16px;">arrow_back</span> Home
+    </a>
+    <span style="color:var(--text-mid);opacity:0.4;">/</span>
+    <span class="text-sm font-bold" style="color:var(--green-dark);">Termini di Servizio</span>
+  </div>
+
+  <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-bold text-sm mb-4" style="background:rgba(197,238,188,0.8);color:var(--green-mid);">
+    <span>📜</span> Condizioni d'Uso della Piattaforma
+  </div>
+  <h1 class="fredoka text-3xl md:text-5xl mb-3" style="color:var(--green-dark);line-height:1.2;">
+    Termini e Condizioni di Servizio
+  </h1>
+  <p class="text-base md:text-lg font-semibold max-w-2xl" style="color:var(--text-mid);line-height:1.6;">
+    Condizioni generali di utilizzo del sito e della Progressive Web App Aura Foods.
+  </p>
+</section>
+
+<!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+<main class="max-w-5xl mx-auto px-5 pb-20 w-full flex-1">
+  <div class="legal-card">
 
     <div class="legal-section">
       <h2>1. Oggetto e Accettazione dei Termini</h2>
@@ -434,7 +340,7 @@ body::before {
         Nei limiti massimi consentiti dalla legge applicabile:
       </p>
       <ul>
-        <li>Il Titolare non garantisce che l'applicazione funzioni in modo ininterrotto, privo di bug, esente da errori o che i dati memorizzati non vadano soggetti a perdite accidentali (è sempre consigliata una condotta prudente);</li>
+        <li>Il Titolare non garantisce che l'applicazione funzioni in modo ininterrotto, privo di bug, esente da errori o che i dati memorizzati non vadano soggetti a perdite accidentali;</li>
         <li>Il Titolare declina ogni responsabilità per interruzioni dovute a manutenzione, guasti dei server cloud (Supabase, Vercel), malfunzionamenti della rete Internet o cause di forza maggiore;</li>
         <li>I dati dei prodotti ricavati tramite Open Food Facts provengono da un database pubblico collaborativo e possono contenere inesattezze, variazioni di ingredienti o errori di catalogazione per i quali Aura Foods non risponde.</li>
       </ul>
@@ -470,21 +376,34 @@ body::before {
       </p>
     </div>
 
-  </main>
+  </div>
+</main>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-links">
-      <a href="/" class="footer-link">Home</a>
-      <a href="/installa.html" class="footer-link">Installa PWA</a>
-      <a href="/verifica-alimenti" class="footer-link">Verifica Alimenti</a>
-      <a href="/termini" class="footer-link" style="font-weight:900;">Termini di Servizio</a>
-      <a href="/privacy" class="footer-link">Privacy Policy</a>
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="border-t py-10" style="background:rgba(208,249,198,0.5);border-color:rgba(192,201,191,0.25);">
+  <div class="max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="flex items-center gap-3">
+      <img src="/img/image.png" alt="Aura Foods" class="w-8 h-8 rounded-lg" onerror="this.style.display='none'"/>
+      <span class="fredoka text-xl" style="color:var(--green-dark);">Aura Foods</span>
     </div>
-    <p>© 2025-2026 Aura Foods • Tutti i diritti riservati</p>
-  </footer>
+    <div class="flex flex-wrap justify-center gap-6">
+      <a href="/installa.html" class="text-sm font-bold hover:text-green-800 transition-colors" style="color:var(--text-mid);">Scarica PWA</a>
+      <a href="/#come-funziona" class="text-sm font-bold hover:text-green-800 transition-colors" style="color:var(--text-mid);">Come funziona</a>
+      <a href="/#features" class="text-sm font-bold hover:text-green-800 transition-colors" style="color:var(--text-mid);">Funzioni</a>
+      <a href="/#coins" class="text-sm font-bold hover:text-green-800 transition-colors" style="color:var(--text-mid);">Aura Coins</a>
+      <a href="/verifica-alimenti" class="text-sm font-bold hover:text-green-800 transition-colors" style="color:var(--text-mid);">Verifica alimenti</a>
+      <a href="/termini.html" class="text-sm font-bold hover:text-green-800 transition-colors" style="color:var(--text-mid);">Termini</a>
+      <a href="/privacy.html" class="text-sm font-bold hover:text-green-800 transition-colors" style="color:var(--text-mid);">Privacy</a>
+    </div>
+    <p class="text-sm font-bold" style="color:rgba(64,73,66,0.5);">© 2025-26 Aura Foods</p>
+  </div>
+</footer>
 
-</div>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
+  }
+</script>
 
 </body>
 </html>
