@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<script>
+  (function() {
+    const isPWA = window.matchMedia('(display-mode: standalone)').matches
+               || window.navigator.standalone === true;
+    if (isPWA) document.documentElement.classList.add('pwa');
+  })();
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Aura Farming — Vertical Farming Intelligente | Dal team Aura Foods 🌱</title>
+<meta name="description" content="Aura Farming è il nuovo progetto del team Aura Foods: la piattaforma enterprise SaaS con Digital Twin, telemetria IoT e Smart Energy per il Vertical Farming multilivello."/>
+<meta name="theme-color" content="#1a5c3a"/>
+<link rel="manifest" href="/manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Aura Farming">
+<link rel="apple-touch-icon" href="/img/icon-180.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/img/icon-192.png">
+<link rel="shortcut icon" href="/img/icon-180.png">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://aura-foods.it/farming">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Aura Foods">
+<meta property="og:title" content="Aura Farming — La piattaforma per il Vertical Farming | Aura Foods 🌱"/>
+<meta property="og:description" content="Digital Twin 2.5D, monitoraggio IoT e ottimizzazione energetica per le serre verticali del futuro. Un progetto del team Aura Foods."/>
+<meta property="og:image" content="https://aura-foods.it/img/image.png"/>
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:url" content="https://aura-foods.it/farming">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Aura Farming — Vertical Farming Intelligente 🌱">
+<meta name="twitter:description" content="Dal sensore alla dashboard in tempo reale: Digital Twin, telemetria IoT e Smart Energy dal team Aura Foods.">
+<meta name="twitter:image" content="https://aura-foods.it/img/image.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Aura Farming",
+  "url": "https://aura-foods.it/farming",
+  "description": "Piattaforma enterprise SaaS per il Vertical Farming multilivello: Digital Twin, telemetria IoT, Smart Energy e tracciabilità lotti.",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "creator": {
+    "@type": "Organization",
+    "name": "Aura Foods",
+    "url": "https://aura-foods.it/"
+  }
+}
+</script>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        "primary": "#004326",
+        "primary-container": "#1a5c3a",
+        "secondary": "#2c694e",
+        "secondary-container": "#aeeecb",
+        "surface": "#ecffe4",
+        "surface-container": "#d0f9c6",
+        "surface-container-high": "#caf3c1",
+        "surface-container-highest": "#c5eebc",
+        "surface-container-low": "#d5ffcc",
+        "on-primary": "#ffffff",
+        "on-primary-container": "#91d2a7",
+        "on-secondary-container": "#316e52",
+        "on-surface": "#002203",
+        "on-surface-variant": "#404942",
+        "outline-variant": "#c0c9bf",
+        "inverse-primary": "#93d5aa",
+        "error": "#ba1a1a",
+        "primary-fixed": "#aff2c4",
+        "secondary-fixed": "#b1f0ce",
+      }
+    }
+  }
+}
+</script>
+
+<style>
+  :root {
+    --green-dark: #004326;
+    --green-mid: #1a5c3a;
+    --green-muted: #2c694e;
+    --green-light: #a8d9a0;
+    --green-mint: #c5eebc;
+    --green-pale: #ecffe4;
+    --text-dark: #002203;
+    --text-mid: #404942;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--green-pale);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  .fredoka { font-family: 'Fredoka One', cursive; }
+
+  /* Glass card */
+  .glass-card {
+    background: rgba(255,255,255,0.76);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.5);
+  }
+
+  /* Freshness / telemetry bar */
+  .freshness-bar { height: 6px; border-radius: 9999px; background: #c5eebc; overflow: hidden; }
+  .freshness-fill { height: 100%; border-radius: 9999px; }
+
+  /* Animations */
+  @keyframes floatUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes floatBob {
+    0%,100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes pulse-ring {
+    0% { transform: scale(1); opacity: 0.4; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+  @keyframes blink {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .animate-float { animation: floatBob 4s ease-in-out infinite; }
+  .animate-float-slow { animation: floatBob 6s ease-in-out infinite; }
+  .animate-float-2 { animation: floatBob 5s ease-in-out 1s infinite; }
+
+  /* Reveal on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Organic blob background */
+  .blob-bg {
+    background: radial-gradient(ellipse at 20% 50%, #c5eebc55 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, #a8d9a044 0%, transparent 55%),
+                radial-gradient(ellipse at 60% 80%, #2d6a4f22 0%, transparent 50%),
+                #ecffe4;
+  }
+
+  /* Nav */
+  .nav-link {
+    position: relative;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text-mid);
+    transition: color 0.2s;
+    text-decoration: none;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0;
+    width: 0; height: 2px;
+    background: var(--green-mid);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+  .nav-link:hover { color: var(--green-dark); }
+  .nav-link:hover::after { width: 100%; }
+  .nav-link.active { color: var(--green-dark); }
+  .nav-link.active::after { width: 100%; }
+
+  /* Bento & step hover */
+  .bento-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .bento-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,67,38,0.15);
+  }
+
+  .step-icon {
+    transition: background 0.3s, transform 0.3s;
+  }
+  .step-card:hover .step-icon {
+    background: var(--green-mid) !important;
+    transform: scale(1.08);
+  }
+  .step-card:hover .step-icon .material-symbols-outlined {
+    color: white !important;
+  }
+
+  .coin-pulse::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: rgba(177,240,206,0.5);
+    animation: pulse-ring 1.8s ease-out infinite;
+  }
+
+  .ai-dot { animation: blink 1.8s ease-in-out infinite; }
+
+  /* Buttons */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green-dark);
+    color: white;
+    font-family: 'Fredoka One', cursive;
+    font-size: 18px;
+    padding: 14px 36px;
+    border-radius: 9999px;
+    text-decoration: none;
+    box-shadow: 0 6px 24px rgba(0,67,38,0.28);
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,67,38,0.35); }
+  .btn-primary:active { transform: scale(0.97); opacity: 0.9; }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(197,238,188,0.8);
+    color: var(--green-dark);
+    font-family: 'Fredoka One', cursive;
+    font-size: 17px;
+    padding: 13px 32px;
+    border-radius: 9999px;
+    text-decoration: none;
+    border: 2px solid rgba(45,106,79,0.3);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-secondary:hover { background: rgba(197,238,188,1); transform: translateY(-1px); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--green-pale); }
+  ::-webkit-scrollbar-thumb { background: var(--green-light); border-radius: 3px; }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ═══════════════ NAVBAR ═══════════════ -->
+<header class="bg-surface/90 backdrop-blur-md sticky top-0 z-50 border-b border-outline-variant/20" style="border-bottom:1px solid rgba(192,201,191,0.2);">
+  <nav class="max-w-6xl mx-auto px-5 h-20 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-3 no-underline">
+      <img src="/img/image.png" alt="Aura Foods" class="w-10 h-10 rounded-xl object-cover shadow-sm"/>
+      <div class="flex items-center gap-2">
+        <span class="fredoka text-2xl" style="color:var(--green-dark);">Aura Foods</span>
+        <span class="text-xs font-extrabold px-2.5 py-0.5 rounded-full" style="background:#c5eebc;color:var(--green-mid);">FARMING</span>
+      </div>
+    </a>
+    <div class="hidden md:flex items-center gap-7">
+      <a href="#sfide" class="nav-link">Il Progetto</a>
+      <a href="#moduli" class="nav-link">Moduli</a>
+      <a href="#architettura" class="nav-link">Architettura</a>
+      <a href="#sviluppo" class="nav-link">Sviluppo</a>
+      <a href="/verifica-alimenti" class="nav-link">Verifica alimenti</a>
+      <a href="/farming" class="nav-link active">Aura Farming</a>
+    </div>
+    <a href="/" class="btn-primary" style="font-size:15px;padding:10px 24px;">
+      Aura Foods App
+      <span class="material-symbols-outlined" style="font-size:18px;">arrow_outward</span>
+    </a>
+  </nav>
+</header>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="relative overflow-hidden blob-bg pt-14 pb-28 md:pt-24 md:pb-36">
+  <!-- Decorative blobs -->
+  <div class="absolute -top-20 -right-20 w-96 h-96 rounded-full opacity-30 pointer-events-none" style="background:radial-gradient(circle, #2d6a4f55, transparent 70%);"></div>
+  <div class="absolute -bottom-10 -left-10 w-72 h-72 rounded-full opacity-20 pointer-events-none" style="background:radial-gradient(circle, #a8d9a0, transparent 70%);"></div>
+
+  <div class="max-w-6xl mx-auto px-5 grid grid-cols-1 md:grid-cols-2 gap-16 items-center relative z-10">
+    <!-- Left: Text -->
+    <div class="flex flex-col gap-6" style="animation: floatUp 0.7s ease both;">
+      <div class="flex flex-wrap items-center gap-2">
+        <a href="/" class="text-xs font-bold flex items-center gap-1 px-3 py-1.5 rounded-full no-underline" style="background:rgba(255,255,255,0.7);color:var(--green-mid);">
+          <span class="material-symbols-outlined" style="font-size:14px;">arrow_back</span> Aura Foods
+        </a>
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-wider" style="background:rgba(197,238,188,0.85);color:var(--green-mid);">
+          <span class="material-symbols-outlined" style="font-size:16px;color:var(--green-mid);">psychiatry</span>
+          Clean Tech · SaaS · Dal Team Aura Foods
+        </div>
+      </div>
+
+      <h1 class="fredoka leading-tight" style="font-size:clamp(38px,5vw,58px);color:var(--green-dark);line-height:1.12;">
+        Aura Farming:<br>
+        <span style="color:var(--green-muted);font-style:italic;">la serra verticale diventa intelligente.</span>
+      </h1>
+
+      <p style="font-size:18px;line-height:1.7;color:var(--text-mid);max-width:500px;">
+        Dalla dispensa di casa alla produzione agricola del futuro: <strong>Aura Farming</strong> è la nuova piattaforma enterprise del team Aura Foods per il <strong>Vertical Farming multilivello</strong>. Un unico Digital Twin per unire telemetria IoT, efficienza energetica e tracciabilità dal seme alla raccolta.
+      </p>
+
+      <div class="flex flex-wrap gap-4 mt-1">
+        <a href="#moduli" class="btn-primary">
+          Scopri la piattaforma
+          <span class="material-symbols-outlined" style="font-size:20px;">layers</span>
+        </a>
+        <a href="#sviluppo" class="btn-secondary">
+          Roadmap di sviluppo
+          <span class="material-symbols-outlined" style="font-size:18px;">timeline</span>
+        </a>
+      </div>
+
+      <!-- Key Megatrend Pills -->
+      <div class="grid grid-cols-3 gap-3 pt-2 max-w-md">
+        <div class="glass-card rounded-2xl p-3 text-center">
+          <div class="fredoka text-xl" style="color:var(--green-dark);">-95%</div>
+          <div class="text-xs font-bold" style="color:var(--text-mid);">Acqua con ricircolo</div>
+        </div>
+        <div class="glass-card rounded-2xl p-3 text-center">
+          <div class="fredoka text-xl" style="color:var(--green-dark);">Km Zero</div>
+          <div class="text-xs font-bold" style="color:var(--text-mid);">Filiera urbana</div>
+        </div>
+        <div class="glass-card rounded-2xl p-3 text-center">
+          <div class="fredoka text-xl" style="color:var(--green-dark);">365 gg</div>
+          <div class="text-xs font-bold" style="color:var(--text-mid);">Resilienza climatica</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Digital Twin UI Mockup (Aura Foods visual style) -->
+    <div class="relative flex justify-center" style="animation: floatUp 0.9s ease 0.15s both;">
+      <div class="glass-card rounded-3xl shadow-2xl p-5 w-full max-w-sm animate-float" style="rotate:1.5deg;">
+        <!-- Top bar -->
+        <div class="flex justify-between items-center mb-4">
+          <div>
+            <span class="fredoka text-lg" style="color:var(--green-dark);">🌱 Digital Twin · Zona A</span>
+            <div class="text-xs font-bold" style="color:var(--text-mid);">Rack #04 • Vista 2.5D multilivello</div>
+          </div>
+          <div class="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold" style="background:#c5eebc;color:var(--green-dark);">
+            <span class="ai-dot w-2 h-2 rounded-full inline-block" style="background:#1a5c3a;"></span>
+            <span>98,4% Online</span>
+          </div>
+        </div>
+
+        <!-- Rack Levels -->
+        <div class="flex flex-col gap-3">
+          <!-- Livello 3 -->
+          <div class="rounded-2xl p-3 flex items-center gap-3" style="background:rgba(255,255,255,0.88);border:1px solid rgba(44,105,78,0.2);">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:#d5ffcc;">🌿</div>
+            <div class="flex-1 min-w-0">
+              <div class="flex justify-between items-center">
+                <span class="font-extrabold text-sm" style="color:var(--text-dark);">Liv. 3 · Basilico Bio</span>
+                <span class="text-xs font-bold px-2 py-0.5 rounded-full" style="background:#c5eebc;color:var(--green-mid);">Ottimale ✨</span>
+              </div>
+              <div class="text-xs mt-1 font-semibold" style="color:var(--text-mid);">pH 6.1 • EC 1.8 mS/cm • 22.4°C • UR 68%</div>
+              <div class="freshness-bar mt-1.5">
+                <div class="freshness-fill w-[92%]" style="background:#1a5c3a;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Livello 2 -->
+          <div class="rounded-2xl p-3 flex items-center gap-3" style="background:rgba(255,255,255,0.88);border:1px solid rgba(192,201,191,0.3);">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:#c5eebc;">🥬</div>
+            <div class="flex-1 min-w-0">
+              <div class="flex justify-between items-center">
+                <span class="font-extrabold text-sm" style="color:var(--text-dark);">Liv. 2 · Baby Leaf Mix</span>
+                <span class="text-xs font-bold px-2 py-0.5 rounded-full" style="background:#aeeecb;color:var(--green-dark);">Fascia F2/F3 ⚡</span>
+              </div>
+              <div class="text-xs mt-1 font-semibold" style="color:var(--text-mid);">pH 5.9 • EC 1.6 mS/cm • Fotoperiodo LED 75%</div>
+              <div class="freshness-bar mt-1.5">
+                <div class="freshness-fill w-[84%]" style="background:#2c694e;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Livello 1 (Alert predittivo) -->
+          <div class="rounded-2xl p-3 flex items-center gap-3" style="background:rgba(255,255,255,0.88);border:1px solid rgba(186,26,26,0.2);">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:#fde8e8;">🌱</div>
+            <div class="flex-1 min-w-0">
+              <div class="flex justify-between items-center">
+                <span class="font-extrabold text-sm" style="color:var(--text-dark);">Liv. 1 · Microgreens</span>
+                <span class="text-xs font-bold" style="color:#ba1a1a;">Alert EC ⚠️</span>
+              </div>
+              <div class="text-xs mt-1 font-semibold" style="color:var(--text-mid);">Lotto #L-204 • Vassoio 12 • +0.3 mS sopra target</div>
+              <div class="freshness-bar mt-1.5">
+                <div class="freshness-fill w-[38%]" style="background:#ba1a1a;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom telemetry bar -->
+        <div class="mt-4 rounded-2xl p-3.5 flex items-center justify-between" style="background:var(--green-dark);">
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-white" style="font-size:24px;">sensors</span>
+            <div>
+              <div class="text-xs font-bold" style="color:rgba(177,240,206,0.8);">Vista Operativa Unica</div>
+              <div class="fredoka text-base text-white">24 zone attive • Real-Time</div>
+            </div>
+          </div>
+          <span class="text-xs font-bold px-2.5 py-1 rounded-full" style="background:rgba(177,240,206,0.18);color:#b1f0ce;">Live</span>
+        </div>
+      </div>
+
+      <!-- Floating badge 1 -->
+      <div class="absolute -bottom-5 -right-2 glass-card rounded-2xl p-3 shadow-xl flex items-center gap-3 animate-float-2" style="rotate:-3deg;">
+        <div class="w-9 h-9 rounded-full flex items-center justify-center" style="background:var(--green-mid);">
+          <span class="material-symbols-outlined text-white" style="font-size:18px;">water_drop</span>
+        </div>
+        <div>
+          <div class="text-xs font-bold uppercase tracking-wider" style="color:var(--text-mid);">Risparmio idrico</div>
+          <div class="fredoka text-xl" style="color:var(--green-dark);">Fino al 95%</div>
+        </div>
+      </div>
+
+      <!-- Floating badge 2 -->
+      <div class="absolute -top-4 -left-4 glass-card rounded-2xl px-4 py-2 shadow-lg flex items-center gap-2 animate-float-slow">
+        <span class="text-lg">⚡</span>
+        <div class="fredoka text-sm" style="color:var(--green-dark);">Peak Shaving F2/F3 attivo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ IL PROBLEMA & LA SFIDA OPERATIVA ═══════════════ -->
+<section id="sfide" class="py-24 reveal" style="background:rgba(208,249,198,0.5);">
+  <div class="max-w-6xl mx-auto px-5">
+    <div class="text-center mb-16">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-wider mb-3" style="background:rgba(197,238,188,0.9);color:var(--green-mid);">
+        Il Contesto Operativo
+      </div>
+      <h2 class="fredoka text-4xl md:text-5xl mb-3" style="color:var(--green-dark);">La tecnologia cresce. Le operazioni faticano.</h2>
+      <p style="color:var(--text-mid);font-size:17px;max-width:640px;margin:0 auto;">
+        Il Vertical Farming porta la produzione vicino alle città con meno acqua e zero sprechi di filiera, ma le serre multilivello generano migliaia di segnali, decisioni e rischi ogni giorno.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- 01 Energia -->
+      <div class="step-card glass-card rounded-3xl p-7 flex flex-col items-start gap-4 bento-card">
+        <div class="w-full flex items-center justify-between">
+          <div class="step-icon w-16 h-16 rounded-2xl flex items-center justify-center shadow-sm" style="background:#c5eebc;">
+            <span class="material-symbols-outlined" style="font-size:34px;color:var(--green-dark);">bolt</span>
+          </div>
+          <span class="fredoka text-3xl" style="color:rgba(0,67,38,0.2);">01</span>
+        </div>
+        <div>
+          <div class="fredoka text-2xl mb-2" style="color:var(--green-dark);">Costi e Picchi Energetici</div>
+          <p style="color:var(--text-mid);font-size:15px;line-height:1.65;">
+            Costi elevati, picchi di consumo e forte dipendenza dalle fasce tariffarie. Ogni rack aggiunge carico: senza un'ottimizzazione intelligente, <strong>il consumo cresce più della produzione</strong>.
+          </p>
+        </div>
+        <div class="mt-auto text-xs font-extrabold px-3 py-1.5 rounded-full" style="background:rgba(197,238,188,0.75);color:var(--green-mid);">
+          ⚡ Necessità di Peak Shaving e controllo LED
+        </div>
+      </div>
+
+      <!-- 02 Microclima -->
+      <div class="step-card glass-card rounded-3xl p-7 flex flex-col items-start gap-4 bento-card">
+        <div class="w-full flex items-center justify-between">
+          <div class="step-icon w-16 h-16 rounded-2xl flex items-center justify-center shadow-sm" style="background:#c5eebc;">
+            <span class="material-symbols-outlined" style="font-size:34px;color:var(--green-dark);">thermostat</span>
+          </div>
+          <span class="fredoka text-3xl" style="color:rgba(0,67,38,0.2);">02</span>
+        </div>
+        <div>
+          <div class="fredoka text-2xl mb-2" style="color:var(--green-dark);">Microclima Multilivello</div>
+          <p style="color:var(--text-mid);font-size:15px;line-height:1.65;">
+            <strong>pH, EC, temperatura e umidità</strong> cambiano costantemente tra zone e livelli. Piccole variazioni non rilevate si propagano in poche ore e compromettono resa e qualità del raccolto.
+          </p>
+        </div>
+        <div class="mt-auto text-xs font-extrabold px-3 py-1.5 rounded-full" style="background:rgba(197,238,188,0.75);color:var(--green-mid);">
+          🌡️ Telemetria granulare per zona e livello
+        </div>
+      </div>
+
+      <!-- 03 Tracciabilità -->
+      <div class="step-card glass-card rounded-3xl p-7 flex flex-col items-start gap-4 bento-card">
+        <div class="w-full flex items-center justify-between">
+          <div class="step-icon w-16 h-16 rounded-2xl flex items-center justify-center shadow-sm" style="background:#c5eebc;">
+            <span class="material-symbols-outlined" style="font-size:34px;color:var(--green-dark);">qr_code_2</span>
+          </div>
+          <span class="fredoka text-3xl" style="color:rgba(0,67,38,0.2);">03</span>
+        </div>
+        <div>
+          <div class="fredoka text-2xl mb-2" style="color:var(--green-dark);">Tracciabilità & Compliance</div>
+          <p style="color:var(--text-mid);font-size:15px;line-height:1.65;">
+            Lotti, vassoi e interventi diventano difficili da seguire su decine di rack. Senza un <strong>filo unico tra zona, lotto e operatore</strong>, la conformità diventa lenta e manuale.
+          </p>
+        </div>
+        <div class="mt-auto text-xs font-extrabold px-3 py-1.5 rounded-full" style="background:rgba(197,238,188,0.75);color:var(--green-mid);">
+          📋 Dal seme alla raccolta senza fogli sparsi
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ I 4 MODULI (BENTO GRID) ═══════════════ -->
+<section id="moduli" class="py-24 reveal">
+  <div class="max-w-6xl mx-auto px-5">
+    <div class="text-center mb-14">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-wider mb-3" style="background:rgba(197,238,188,0.9);color:var(--green-mid);">
+        Piattaforma All-in-One
+      </div>
+      <h2 class="fredoka text-4xl md:text-5xl mb-3" style="color:var(--green-dark);">Quattro moduli. Un unico sistema operativo.</h2>
+      <p style="color:var(--text-mid);font-size:17px;max-width:620px;margin:0 auto;">
+        Un'architettura modulare progettata dal team Aura Foods per vedere, capire, ottimizzare e dimostrare ogni attività in serra.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+
+      <!-- Modulo 1: Digital Twin 2.5D & Navigazione Rack (Large 8-col) -->
+      <div class="bento-card md:col-span-8 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative" style="background:#c5eebc;">
+        <div>
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-extrabold mb-3" style="background:rgba(45,106,79,0.15);color:var(--green-mid);">MODULO 01 · DIGITAL TWIN</span>
+          <h3 class="fredoka text-3xl mb-3" style="color:var(--green-dark);">Mappa 2.5D e Rack Navigabili</h3>
+          <p style="color:var(--text-mid);font-size:15.5px;max-width:520px;line-height:1.65;">
+            Il Digital Twin replica la serra in tempo reale con <strong>mappa 2.5D dei rack e heatmap termica</strong> per individuare subito ogni criticità. L'operatore passa dalla visione d'insieme al singolo vassoio senza mai perdere contesto.
+          </p>
+        </div>
+
+        <!-- Drill-down visual: Zona -> Rack -> Livello -> Vassoio -->
+        <div class="mt-7 grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="rounded-2xl p-4 shadow-sm" style="background:rgba(255,255,255,0.9);">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="material-symbols-outlined" style="font-size:20px;color:var(--green-mid);">explore</span>
+              <span class="fredoka text-base" style="color:var(--green-dark);">1. Naviga</span>
+            </div>
+            <p class="text-xs font-bold" style="color:var(--text-mid);">Zona → Rack → Livello → Singolo Vassoio in 2 click.</p>
+          </div>
+          <div class="rounded-2xl p-4 shadow-sm" style="background:rgba(255,255,255,0.9);">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="material-symbols-outlined" style="font-size:20px;color:var(--green-mid);">monitoring</span>
+              <span class="fredoka text-base" style="color:var(--green-dark);">2. Controlla</span>
+            </div>
+            <p class="text-xs font-bold" style="color:var(--text-mid);">Fenologia, stato coltura e microclima live per livello.</p>
+          </div>
+          <div class="rounded-2xl p-4 shadow-sm" style="background:rgba(255,255,255,0.9);">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="material-symbols-outlined" style="font-size:20px;color:var(--green-mid);">task_alt</span>
+              <span class="fredoka text-base" style="color:var(--green-dark);">3. Agisci</span>
+            </div>
+            <p class="text-xs font-bold" style="color:var(--text-mid);">Schede tecniche operative e storico interventi immediato.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modulo 2: Smart Energy (4-col Dark Card) -->
+      <div class="bento-card md:col-span-4 rounded-3xl p-7 flex flex-col justify-between text-center" style="background:var(--green-dark);color:white;">
+        <div>
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-extrabold mb-4" style="background:rgba(177,240,206,0.15);color:#b1f0ce;">MODULO 02 · SMART ENERGY</span>
+          <div class="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center relative coin-pulse" style="background:rgba(255,255,255,0.12);">
+            <span class="material-symbols-outlined text-3xl" style="color:#b1f0ce;">energy_program_saving</span>
+          </div>
+          <h3 class="fredoka text-2xl mb-2">Energia Smart & LED</h3>
+          <p style="font-size:14px;line-height:1.6;color:rgba(177,240,206,0.9);">
+            Coordina illuminazione LED, tariffe elettriche e manutenzione per tagliare gli sprechi senza compromettere la resa.
+          </p>
+        </div>
+
+        <div class="mt-5 flex flex-col gap-2 text-left">
+          <div class="rounded-xl p-2.5 flex items-center gap-2.5" style="background:rgba(255,255,255,0.1);">
+            <span class="text-base">☀️</span>
+            <span style="font-size:12.5px;color:rgba(255,255,255,0.95);font-weight:700;"><strong>Fotoperiodo:</strong> LED regolati sulle fasi vegetative</span>
+          </div>
+          <div class="rounded-xl p-2.5 flex items-center gap-2.5" style="background:rgba(255,255,255,0.1);">
+            <span class="text-base">📉</span>
+            <span style="font-size:12.5px;color:rgba(255,255,255,0.95);font-weight:700;"><strong>Peak Shaving:</strong> carichi spostati in fasce F2/F3</span>
+          </div>
+          <div class="rounded-xl p-2.5 flex items-center gap-2.5" style="background:rgba(255,255,255,0.1);">
+            <span class="text-base">🛠️</span>
+            <span style="font-size:12.5px;color:rgba(255,255,255,0.95);font-weight:700;"><strong>Alert Predittivi:</strong> manutenzione prima del fermo</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modulo 3: Telemetria IoT (4-col) -->
+      <div class="bento-card md:col-span-4 rounded-3xl p-7 flex flex-col justify-between" style="background:rgba(174,238,203,0.65);">
+        <div>
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-extrabold mb-3" style="background:rgba(0,67,38,0.1);color:var(--green-dark);">MODULO 03 · TELEMETRIA IoT</span>
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-4" style="background:rgba(255,255,255,0.75);">
+            <span class="material-symbols-outlined" style="font-size:34px;color:var(--green-mid);">sensors</span>
+          </div>
+          <h3 class="fredoka text-2xl mb-2" style="color:var(--green-dark);">Sensori in Tempo Reale</h3>
+          <p style="color:var(--text-mid);font-size:14.5px;line-height:1.65;">
+            Parametri di <strong>pH, conducibilità elettrica (EC), temperatura e umidità</strong> aggregati in tempo reale per ogni singola zona e livello della facility.
+          </p>
+        </div>
+        <div class="mt-5 flex flex-wrap gap-2">
+          <span class="text-xs font-extrabold px-3 py-1 rounded-full" style="background:white;color:var(--green-dark);">💧 pH & EC live</span>
+          <span class="text-xs font-extrabold px-3 py-1 rounded-full" style="background:white;color:var(--green-dark);">🌡️ Heatmap Clima</span>
+        </div>
+      </div>
+
+      <!-- Modulo 4: KPI & Lotti (8-col) -->
+      <div class="bento-card md:col-span-8 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-8" style="background:rgba(208,249,198,0.75);">
+        <div class="flex-1">
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-extrabold mb-3" style="background:rgba(45,106,79,0.15);color:var(--green-mid);">MODULO 04 · KPI & LOTTI</span>
+          <h3 class="fredoka text-3xl mb-3" style="color:var(--green-dark);">Tracciabilità completa dal seme alla raccolta</h3>
+          <p style="color:var(--text-mid);font-size:15.5px;line-height:1.65;">
+            Dashboard direzionale, audit log e storico completo di ogni lotto produttivo. Collega automaticamente <strong>zona, vassoio, ricetta nutritiva e interventi dell'operatore</strong> per una compliance alimentare certificabile in un clic.
+          </p>
+          <div class="mt-5 flex flex-wrap gap-2.5">
+            <span class="text-xs font-extrabold px-3.5 py-1.5 rounded-full" style="background:white;color:var(--green-dark);">📦 Storico Lotti & Vassoi</span>
+            <span class="text-xs font-extrabold px-3.5 py-1.5 rounded-full" style="background:white;color:var(--green-dark);">📊 KPI Resa & Consumi</span>
+            <span class="text-xs font-extrabold px-3.5 py-1.5 rounded-full" style="background:white;color:var(--green-dark);">🛡️ Audit & Compliance</span>
+          </div>
+        </div>
+        <div class="w-28 h-28 rounded-3xl flex flex-col items-center justify-center flex-shrink-0 animate-float shadow-md" style="background:white;">
+          <span class="material-symbols-outlined" style="font-size:48px;color:var(--green-dark);">analytics</span>
+          <span class="text-xs font-extrabold mt-1" style="color:var(--green-mid);">100% Tracciato</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ ARCHITETTURA TECNICA (DARK SECTION) ═══════════════ -->
+<section id="architettura" class="py-24 relative overflow-hidden reveal" style="background:var(--green-dark);">
+  <!-- Background decorations -->
+  <div class="absolute inset-0 pointer-events-none opacity-10">
+    <div class="absolute top-0 left-0 w-96 h-96 rounded-full" style="background:radial-gradient(circle,white,transparent);transform:translate(-30%,-30%);"></div>
+    <div class="absolute bottom-0 right-0 w-80 h-80 rounded-full" style="background:radial-gradient(circle,#93d5aa,transparent);transform:translate(30%,30%);"></div>
+  </div>
+
+  <div class="max-w-6xl mx-auto px-5 relative z-10">
+    <div class="text-center mb-16">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-wider mb-3" style="background:rgba(177,240,206,0.15);color:#b1f0ce;">
+        Stack Tecnologico & Data Pipeline
+      </div>
+      <h2 class="fredoka text-4xl md:text-5xl text-white mb-3">
+        Dal sensore alla dashboard, in tempo reale.
+      </h2>
+      <p style="font-size:17px;line-height:1.7;color:rgba(177,240,206,0.9);max-width:640px;margin:0 auto;">
+        Uno stack web moderno, scalabile e progettato per integrare hardware eterogeneo con sicurezza e audit su ogni livello.
+      </p>
+    </div>
+
+    <!-- 4-Stage Pipeline -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <!-- Stage 1 -->
+      <div class="rounded-3xl p-6 flex flex-col justify-between" style="background:rgba(255,255,255,0.08);border:1px solid rgba(177,240,206,0.2);">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full" style="background:rgba(177,240,206,0.18);color:#b1f0ce;">01 · Telemetria</span>
+            <span class="material-symbols-outlined" style="color:#b1f0ce;font-size:28px;">router</span>
+          </div>
+          <h3 class="fredoka text-2xl text-white mb-2">Sensori Campo</h3>
+          <p style="font-size:14px;color:rgba(177,240,206,0.85);line-height:1.6;">
+            Acquisizione continua di <strong>pH, EC e microclima</strong> dai rack con connettività a bassa latenza.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t text-xs font-bold" style="border-color:rgba(255,255,255,0.1);color:#93d5aa;">
+          Hardware-agnostic • IoT Edge
+        </div>
+      </div>
+
+      <!-- Stage 2 -->
+      <div class="rounded-3xl p-6 flex flex-col justify-between" style="background:rgba(255,255,255,0.08);border:1px solid rgba(177,240,206,0.2);">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full" style="background:rgba(177,240,206,0.18);color:#b1f0ce;">02 · Normalizzazione</span>
+            <span class="material-symbols-outlined" style="color:#b1f0ce;font-size:28px;">cloud_sync</span>
+          </div>
+          <h3 class="fredoka text-2xl text-white mb-2">API · Data REST</h3>
+          <p style="font-size:14px;color:rgba(177,240,206,0.85);line-height:1.6;">
+            Ingestione, validazione e normalizzazione dei flussi di telemetria tramite API REST ad alta affidabilità.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t text-xs font-bold" style="border-color:rgba(255,255,255,0.1);color:#93d5aa;">
+          Data Stream • Validazione schema
+        </div>
+      </div>
+
+      <!-- Stage 3 -->
+      <div class="rounded-3xl p-6 flex flex-col justify-between" style="background:rgba(255,255,255,0.08);border:1px solid rgba(177,240,206,0.2);">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full" style="background:rgba(177,240,206,0.18);color:#b1f0ce;">03 · Logica Operativa</span>
+            <span class="material-symbols-outlined" style="color:#b1f0ce;font-size:28px;">memory</span>
+          </div>
+          <h3 class="fredoka text-2xl text-white mb-2">Core Engine</h3>
+          <p style="font-size:14px;color:rgba(177,240,206,0.85);line-height:1.6;">
+            Motore di <strong>regole, alert predittivi e calcolo KPI</strong> energetici e agronomici per ogni coltura.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t text-xs font-bold" style="border-color:rgba(255,255,255,0.1);color:#93d5aa;">
+          Smart Rules • Peak Shaving
+        </div>
+      </div>
+
+      <!-- Stage 4 -->
+      <div class="rounded-3xl p-6 flex flex-col justify-between" style="background:rgba(255,255,255,0.08);border:1px solid rgba(177,240,206,0.2);">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full" style="background:rgba(177,240,206,0.18);color:#b1f0ce;">04 · Esperienza Utente</span>
+            <span class="material-symbols-outlined" style="color:#b1f0ce;font-size:28px;">space_dashboard</span>
+          </div>
+          <h3 class="fredoka text-2xl text-white mb-2">Web App & Twin</h3>
+          <p style="font-size:14px;color:rgba(177,240,206,0.85);line-height:1.6;">
+            Interfaccia enterprise reattiva con Digital Twin 2.5D, heatmap e gestione lotti in un'unica vista.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t text-xs font-bold" style="border-color:rgba(255,255,255,0.1);color:#93d5aa;">
+          Dashboard Live • Multi-device
+        </div>
+      </div>
+    </div>
+
+    <!-- Transversal security bar -->
+    <div class="mt-8 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4" style="background:rgba(177,240,206,0.12);border:1px solid rgba(177,240,206,0.25);">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined" style="color:#b1f0ce;">verified_user</span>
+        <span class="text-sm font-bold text-white">Sicurezza, audit log e scalabilità enterprise attraversano ogni livello dell'architettura.</span>
+      </div>
+      <span class="text-xs font-extrabold uppercase tracking-wider px-3 py-1 rounded-full" style="background:rgba(0,67,38,0.6);color:#b1f0ce;">End-to-End</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ ROADMAP DI SVILUPPO ═══════════════ -->
+<section id="sviluppo" class="py-24 reveal" style="background:rgba(213,255,204,0.4);">
+  <div class="max-w-6xl mx-auto px-5">
+    <div class="text-center mb-16">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-wider mb-3" style="background:rgba(197,238,188,0.9);color:var(--green-mid);">
+        Ciclo di Ingegneria & Delivery
+      </div>
+      <h2 class="fredoka text-4xl md:text-5xl mb-3" style="color:var(--green-dark);">Fasi di Sviluppo e Obiettivi</h2>
+      <p style="color:var(--text-mid);font-size:17px;max-width:620px;margin:0 auto;">
+        Una roadmap strutturata in 5 fasi per ridurre il rischio tecnico e accompagnare ogni serra dall'analisi iniziale al miglioramento continuo.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+      <!-- Fase 1: Analisi -->
+      <div class="glass-card rounded-3xl p-6 flex flex-col justify-between bento-card">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="w-10 h-10 rounded-2xl flex items-center justify-center fredoka text-lg" style="background:#c5eebc;color:var(--green-dark);">1</span>
+            <span class="material-symbols-outlined" style="color:var(--green-mid);">fact_check</span>
+          </div>
+          <h3 class="fredoka text-xl mb-2" style="color:var(--green-dark);">Analisi</h3>
+          <p style="font-size:14px;color:var(--text-mid);line-height:1.6;">
+            Mappare i requisiti agronomici, l'hardware esistente e i flussi operativi della serra.
+          </p>
+        </div>
+        <div class="mt-5 pt-3 border-t text-xs font-extrabold" style="border-color:rgba(0,67,38,0.1);color:var(--green-mid);">
+          ✓ Requisiti validati
+        </div>
+      </div>
+
+      <!-- Fase 2: Sviluppo -->
+      <div class="glass-card rounded-3xl p-6 flex flex-col justify-between bento-card">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="w-10 h-10 rounded-2xl flex items-center justify-center fredoka text-lg" style="background:#c5eebc;color:var(--green-dark);">2</span>
+            <span class="material-symbols-outlined" style="color:var(--green-mid);">code_blocks</span>
+          </div>
+          <h3 class="fredoka text-xl mb-2" style="color:var(--green-dark);">Sviluppo</h3>
+          <p style="font-size:14px;color:var(--text-mid);line-height:1.6;">
+            Realizzare e integrare il Digital Twin 2.5D, il motore di regole e i servizi di telemetria IoT.
+          </p>
+        </div>
+        <div class="mt-5 pt-3 border-t text-xs font-extrabold" style="border-color:rgba(0,67,38,0.1);color:var(--green-mid);">
+          ✓ MVP integrato
+        </div>
+      </div>
+
+      <!-- Fase 3: Test -->
+      <div class="glass-card rounded-3xl p-6 flex flex-col justify-between bento-card">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="w-10 h-10 rounded-2xl flex items-center justify-center fredoka text-lg" style="background:#c5eebc;color:var(--green-dark);">3</span>
+            <span class="material-symbols-outlined" style="color:var(--green-mid);">science</span>
+          </div>
+          <h3 class="fredoka text-xl mb-2" style="color:var(--green-dark);">Test</h3>
+          <p style="font-size:14px;color:var(--text-mid);line-height:1.6;">
+            Validare la precisione dei sensori in campo, gli alert predittivi e le logiche di controllo LED.
+          </p>
+        </div>
+        <div class="mt-5 pt-3 border-t text-xs font-extrabold" style="border-color:rgba(0,67,38,0.1);color:var(--green-mid);">
+          ✓ Collaudo sensori
+        </div>
+      </div>
+
+      <!-- Fase 4: Deployment -->
+      <div class="glass-card rounded-3xl p-6 flex flex-col justify-between bento-card">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="w-10 h-10 rounded-2xl flex items-center justify-center fredoka text-lg" style="background:#c5eebc;color:var(--green-dark);">4</span>
+            <span class="material-symbols-outlined" style="color:var(--green-mid);">rocket_launch</span>
+          </div>
+          <h3 class="fredoka text-xl mb-2" style="color:var(--green-dark);">Deployment</h3>
+          <p style="font-size:14px;color:var(--text-mid);line-height:1.6;">
+            Portare la piattaforma in produzione nella facility con formazione degli operatori.
+          </p>
+        </div>
+        <div class="mt-5 pt-3 border-t text-xs font-extrabold" style="border-color:rgba(0,67,38,0.1);color:var(--green-mid);">
+          ✓ Go-Live operativo
+        </div>
+      </div>
+
+      <!-- Fase 5: Monitoraggio -->
+      <div class="glass-card rounded-3xl p-6 flex flex-col justify-between bento-card">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="w-10 h-10 rounded-2xl flex items-center justify-center fredoka text-lg" style="background:var(--green-dark);color:white;">5</span>
+            <span class="material-symbols-outlined" style="color:var(--green-mid);">published_with_changes</span>
+          </div>
+          <h3 class="fredoka text-xl mb-2" style="color:var(--green-dark);">Monitoraggio</h3>
+          <p style="font-size:14px;color:var(--text-mid);line-height:1.6;">
+            Garantire uptime continuo, affinamento dei consumi energetici e ottimizzazione delle rese.
+          </p>
+        </div>
+        <div class="mt-5 pt-3 border-t text-xs font-extrabold" style="border-color:rgba(0,67,38,0.1);color:var(--green-mid);">
+          ✓ Uptime & tuning
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ SOSTENIBILITÀ & IMPATTO ═══════════════ -->
+<section class="py-24 reveal">
+  <div class="max-w-6xl mx-auto px-5">
+    <div class="rounded-3xl p-8 md:p-12" style="background:#c5eebc;">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+        <div class="md:col-span-5">
+          <div class="flex gap-2 mb-3">
+            <span class="text-xs font-extrabold px-3 py-1 rounded-full" style="background:var(--green-dark);color:white;">SDG 08 · Lavoro e Crescita</span>
+            <span class="text-xs font-extrabold px-3 py-1 rounded-full" style="background:var(--green-mid);color:white;">SDG 09 · Innovazione</span>
+          </div>
+          <h2 class="fredoka text-3xl md:text-4xl mb-3" style="color:var(--green-dark);">
+            Sostenibilità che diventa infrastruttura.
+          </h2>
+          <p style="color:var(--text-mid);font-size:15.5px;line-height:1.65;">
+            Aura Farming unisce performance operativa, lavoro qualificato e resilienza urbana, portando la missione anti-spreco di <strong>Aura Foods</strong> direttamente dove nasce il cibo.
+          </p>
+        </div>
+
+        <div class="md:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="rounded-2xl p-5" style="background:rgba(255,255,255,0.88);">
+            <span class="material-symbols-outlined mb-2" style="font-size:30px;color:var(--green-dark);">engineering</span>
+            <h3 class="fredoka text-lg mb-1" style="color:var(--green-dark);">Lavoro Qualificato</h3>
+            <p class="text-xs font-semibold" style="color:var(--text-mid);line-height:1.55;">
+              Nuovi ruoli tecnologici, sicuri e ad alto contenuto di competenze agronomiche e digitali.
+            </p>
+          </div>
+          <div class="rounded-2xl p-5" style="background:rgba(255,255,255,0.88);">
+            <span class="material-symbols-outlined mb-2" style="font-size:30px;color:var(--green-dark);">calendar_month</span>
+            <h3 class="fredoka text-lg mb-1" style="color:var(--green-dark);">365 Giorni / Anno</h3>
+            <p class="text-xs font-semibold" style="color:var(--text-mid);line-height:1.55;">
+              Produzione stabile e programmabile tutto l'anno, protetta da eventi climatici estremi.
+            </p>
+          </div>
+          <div class="rounded-2xl p-5" style="background:rgba(255,255,255,0.88);">
+            <span class="material-symbols-outlined mb-2" style="font-size:30px;color:var(--green-dark);">location_city</span>
+            <h3 class="fredoka text-lg mb-1" style="color:var(--green-dark);">Città Più Resilienti</h3>
+            <p class="text-xs font-semibold" style="color:var(--text-mid);line-height:1.55;">
+              Meno acqua, meno emissioni di trasporto e infrastrutture alimentari vicine alla domanda.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CTA FINALE ═══════════════ -->
+<section class="py-24 text-center reveal">
+  <div class="max-w-2xl mx-auto px-5">
+    <img src="/img/image.png" alt="Aura Farming" class="mx-auto w-20 h-20 rounded-2xl shadow-lg mb-8" onerror="this.style.display='none'"/>
+    <h2 class="fredoka mb-4" style="font-size:clamp(36px,5vw,54px);color:var(--green-dark);line-height:1.2;">
+      Coltiviamo il futuro, insieme.
+    </h2>
+    <p class="mb-10" style="color:var(--text-mid);font-size:17px;line-height:1.7;">
+      Più efficienza e sostenibilità. Meno costi operativi. Più produttività e controllo, dal singolo vassoio all'intera facility. Contatta il team <strong>Aura Foods</strong> per scoprire la demo di Aura Farming.
+    </p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="mailto:farming@aura-foods.it" class="btn-primary" style="font-size:19px;padding:16px 40px;">
+        Richiedi la Demo
+        <span class="material-symbols-outlined" style="font-size:22px;">mail</span>
+      </a>
+      <a href="/" class="btn-secondary" style="font-size:18px;padding:15px 34px;">
+        Torna a Aura Foods
+        <span class="material-symbols-outlined" style="font-size:20px;">home</span>
+      </a>
+    </div>
+    <div class="mt-6 flex justify-center gap-6 flex-wrap">
+      <span style="color:var(--text-mid);font-size:13px;font-weight:700;">✉️ farming@aura-foods.it</span>
+      <span style="color:var(--text-mid);font-size:13px;font-weight:700;">🌐 aura-foods.it/farming</span>
+      <span style="color:var(--text-mid);font-size:13px;font-weight:700;">🌿 Dal team Aura Foods</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="border-t py-10" style="background:rgba(208,249,198,0.5);border-color:rgba(192,201,191,0.25);">
+  <div class="max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="flex items-center gap-3">
+      <img src="/img/image.png" alt="Aura Foods" class="w-8 h-8 rounded-lg" onerror="this.style.display='none'"/>
+      <span class="fredoka text-xl" style="color:var(--green-dark);">Aura Foods</span>
+    </div>
+    <div class="flex flex-wrap justify-center gap-6">
+      <a href="/installa.html" class="text-sm font-bold hover:text-green-800 transition-colors" style="color:var(--text-mid);">Scarica PWA</a>
+      <a href="/#come-funziona" class="text-sm font-bold hover:text-green-800 transition-colors" style="color:var(--text-mid);">Come funziona</a>
+      <a href="/#features" class="text-sm font-bold hover:text-green-800 transition-colors" style="color:var(--text-mid);">Funzioni</a>
+      <a href="/verifica-alimenti" class="text-sm font-bold hover:text-green-800 transition-colors" style="color:var(--text-mid);">Verifica alimenti</a>
+      <a href="/farming" class="text-sm font-bold hover:text-green-800 transition-colors" style="color:var(--green-dark);">Aura Farming</a>
+      <a href="/termini.html" class="text-sm font-bold hover:text-green-800 transition-colors" style="color:var(--text-mid);">Termini</a>
+      <a href="/privacy.html" class="text-sm font-bold hover:text-green-800 transition-colors" style="color:var(--text-mid);">Privacy</a>
+    </div>
+    <p class="text-sm font-bold" style="color:rgba(64,73,66,0.5);">Aura Foods ©. Un servizio Sigma Gooner Holding. Tutti i diritti riservati</p>
+  </div>
+</footer>
+
+<!-- ═══════════════ SCRIPTS ═══════════════ -->
+<script>
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const el = document.querySelector(a.getAttribute('href'));
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Navbar shadow on scroll
+  const header = document.querySelector('header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      header.style.boxShadow = '0 4px 24px rgba(0,67,38,0.10)';
+    } else {
+      header.style.boxShadow = 'none';
+    }
+  });
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
+  }
+</script>
+
+</body>
+</html>
