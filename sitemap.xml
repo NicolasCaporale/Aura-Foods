@@ -23,6 +23,13 @@
   </url>
 
   <url>
+    <loc>https://aura-foods.it/farming</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-11-10</lastmod>
+  </url>
+
+  <url>
     <loc>https://aura-foods.it/privacy</loc>
     <priority>0.5</priority>
     <changefreq>yearly</changefreq>
